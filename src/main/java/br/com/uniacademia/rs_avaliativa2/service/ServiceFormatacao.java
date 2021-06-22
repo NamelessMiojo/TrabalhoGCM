@@ -31,7 +31,23 @@ public class ServiceFormatacao {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/get/cnpj={cnpj}")
     public String formatarCNPJ(@PathParam("cnpj") String cnpj){
-        return null;
+        Gson g = new Gson();
+        try {
+
+            if(cnpj.length() != 14){
+                return g.toJson("");
+            }
+
+            Double.parseDouble(cnpj.trim()); //Evitar letras no cpf
+
+            javax.swing.text.MaskFormatter mascara = new javax.swing.text.MaskFormatter("##.###.###/####-##");
+            javax.swing.JFormattedTextField cnpjFormatado = new javax.swing.JFormattedTextField(mascara);
+
+            cnpjFormatado.setText(cnpj);
+            return g.toJson(cnpjFormatado.getText());
+	    } catch (Exception e) {
+	        return g.toJson("");
+	    }
     }
     
     @GET
