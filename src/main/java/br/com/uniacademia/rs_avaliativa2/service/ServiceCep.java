@@ -21,20 +21,33 @@ import org.json.JSONObject;
  *
  * @author savio
  */
-
 @Path("/cep")
 public class ServiceCep {
+
     private final String USER_AGENT = "Mozilla/5.0";
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/get/cep={cep}")
-    public String buscarCEP(@PathParam("cep") String cep){
-        return null;
+    public String buscarCEP(@PathParam("cep") String cep) {
+        Gson g = new Gson();
+        try {
+
+            if (cep.length() != 8) {
+                return g.toJson("");
+            }
+
+            Double.parseDouble(cep.trim()); //Evitar letras no cpf
+
+            String url = "http://viacep.com.br/ws/" + cep + "/json/";
+            String json = sendGet(url);
+            return json;
+        } catch (Exception e) {
+            return g.toJson("");
+        }
     }
-    
-    
+
     private String sendGet(String url) throws Exception {
-       return null;
+        return null;
     }
 }
