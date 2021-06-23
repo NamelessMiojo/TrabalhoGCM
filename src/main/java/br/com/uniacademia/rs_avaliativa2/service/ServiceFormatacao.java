@@ -23,7 +23,23 @@ public class ServiceFormatacao {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/get/cpf={cpf}")
     public String formatarCPF(@PathParam("cpf") String cpf) {
-        return null;
+        Gson g = new Gson();
+        try {
+            
+            if(cpf.length() != 11){
+                return g.toJson("");
+            }
+            
+            Double.parseDouble(cpf.trim()); //Evitar letras no cpf
+            
+            javax.swing.text.MaskFormatter mascara = new javax.swing.text.MaskFormatter("###.###.###-##");
+            javax.swing.JFormattedTextField cpfFormatado = new javax.swing.JFormattedTextField(mascara);
+           
+            cpfFormatado.setText(cpf);
+            return g.toJson(cpfFormatado.getText());
+	} catch (Exception e) {
+            return g.toJson("");
+	}
     }
 
     @GET
