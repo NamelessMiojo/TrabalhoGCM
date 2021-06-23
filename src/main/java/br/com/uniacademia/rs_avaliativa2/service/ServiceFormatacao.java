@@ -16,28 +16,47 @@ import javax.ws.rs.core.MediaType;
  *
  * @author savio
  */
-
 @Path("/formatar")
 public class ServiceFormatacao {
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/get/cpf={cpf}")
-    public String formatarCPF(@PathParam("cpf") String cpf){
+    public String formatarCPF(@PathParam("cpf") String cpf) {
         return null;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/get/cnpj={cnpj}")
-    public String formatarCNPJ(@PathParam("cnpj") String cnpj){
-        return null;
+
+
+    <<<<<<< HEAD=======
+    public String formatarCNPJ(@PathParam("cnpj") String cnpj) {
+        Gson g = new Gson();
+        try {
+
+            if (cnpj.length() != 14) {
+                return g.toJson("");
+            }
+
+            Double.parseDouble(cnpj.trim()); //Evitar letras no cpf
+
+            javax.swing.text.MaskFormatter mascara = new javax.swing.text.MaskFormatter("##.###.###/####-##");
+            javax.swing.JFormattedTextField cnpjFormatado = new javax.swing.JFormattedTextField(mascara);
+
+            cnpjFormatado.setText(cnpj);
+            return g.toJson(cnpjFormatado.getText());
+        } catch (Exception e) {
+            return g.toJson("");
+        }
+         >>> >>> > 5077b94e7be66c29f17a250f5edb00ece4082084
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/get/cep={cep}")
-    public String formatarCEP(@PathParam("cep") String cep){
+    public String formatarCEP(@PathParam("cep") String cep) {
         return null;
     }
 }
